@@ -1,6 +1,8 @@
 # fumbbl_linux
 
-If you don't know what Fumbbl is, this won't be too useful.
+If you don't know what [Fumbbl](https://fumbbl.com) is, this won't be too useful.
+
+You need to install java for first this to work and run the Fumbbl client.
 
 Fumbbl's horribly outdated, closed-source client still relies on Java Web Start to start a match; getting this to run on Linux is non trivial.
 
