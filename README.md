@@ -10,10 +10,9 @@ Usage:
 
 ```
 chmod +x fumbbl
-./fumbbl update # Download/update the client files
 ./fumbbl /path/to/ffblive.jnlp
 ```
 
-To avoid re-downloading the client files, use `./fumbbl -noupdate ffblive.jnlp`.
+It will download all the jars in the JWS file to the current directory. To avoid re-downloading the client files, use `./fumbbl -noupdate ffblive.jnlp`.
 
 *Note*: It's a zsh script; hopefully you have `/bin/zsh` handy?
