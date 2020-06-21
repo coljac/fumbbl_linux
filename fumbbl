@@ -1,0 +1,34 @@
+#!/bin/zsh
+if [[ $1 == "-noupdate" ]]; then;
+    shift
+    noupdate="N"
+fi
+
+jws=$1
+
+if [[ -z "$jws" ]]; then
+    echo "fumbbl /path/to/ffblive.jnlp"
+    exit 0
+elif [[ ! -f "$jws" ]]; then
+    echo "File not found: $jws"
+    exit 0
+fi
+
+if [[ -z "$noupdate" ]]; then
+    echo "Updating client files..."
+fi
+classpath=""
+for jar in `grep -E -o 'href="([^"]+.jar)"' $jws | sed 's/href="//'|sed 's/"//'`; do
+    if [[ -z "$noupdate" ]]; then
+        wget -nv https://fumbbl.com/FFBClient/live/$jar -O ./$jar
+    fi
+    classpath=$classpath:$jar
+done
+
+auth=`cat $jws | grep 'id='| sed 's/.*a=\([^"]*\)".*/\1/'`
+team=`cat $jws | grep 'teamId' | sed 's/.*teamId<.argument><argument>\([0-9]*\).*/\1/'`
+port=`cat $jws | grep 'port' | sed 's/.*port<.argument><argument>\([0-9]*\).*/\1/'`
+teamname=`cat $jws | grep 'teamName' | sed 's/.*teamName<.argument><argument>\([^<]*\).*/\1/'`
+coach=`cat $jws | grep 'coach' | sed 's/.*coach<.argument><argument>\([^<]*\).*/\1/'`
+
+java -classpath $classpath com.balancedbytes.games.ffb.client.FantasyFootballClient -player  -coach  "'$coach'" -teamId $team -teamName  "'$teamname'" -port $port -auth $auth
